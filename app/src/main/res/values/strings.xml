@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">BottomNavPlayground</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_rose_fragment">Hello Rose fragment</string>
+    <string name="hello_lily_fragment">Hello Lily fragment</string>
+    <string name="hello_tulip_fragment">Hello Tulip fragment</string>
+</resources>
