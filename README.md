@@ -3,7 +3,7 @@
 ## Overview
 This Android project demonstrates various scenario of implementing Bottom Navigation from static xml -> dynamically handing bottom Navigation menu -> compose 
 
-![Sample GIF](https://github.com/oguzhanaslann/DynamicIcon/blob/master/sample/sample.gif)
+![Sample GIF](https://media.tenor.com/images/5d9e6aafbd9c421caebf9133765f3c81/tenor.gif)
 
 ## PlayGround Branches
 - Part1 : master branch -> basic 3 step implementation of BottomNavigation
