@@ -17,7 +17,17 @@ This Android project demonstrates various scenario of implementing Bottom Naviga
 2. adding an xml resource of `BottomNavigationView` & setting menu atttibute
 3. inflating botom Navigation view & setting its onMenu click event
 
+---
 
+### Screenshots
+
+<div align="center">
+    <img src="https://github.com/aman1sr/bottomNavigation-playground/blob/master/app/screenshot/lily.png?raw=true" alt="Lily Screenshot" width="30%" />
+    <img src="https://github.com/aman1sr/bottomNavigation-playground/blob/master/app/screenshot/rose.png?raw=true" alt="Rose Screenshot" width="30%" />
+    <img src="https://github.com/aman1sr/bottomNavigation-playground/blob/master/app/screenshot/tulip.png?raw=true" alt="Tulip Screenshot" width="30%" />
+</div>
+
+---
 ##  Article references:
 - [Article Link: Google Official doc](https://developer.android.com/reference/com/google/android/material/bottomnavigation/BottomNavigationView)
 - [Article Link: GeekForGeek](https://www.geeksforgeeks.org/bottom-navigation-bar-in-android/)
