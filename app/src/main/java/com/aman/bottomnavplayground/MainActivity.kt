@@ -17,8 +17,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 * dynamic menu items
 *
 * */
-class MainActivity : AppCompatActivity() , BottomNavigationView
-.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity() {
     var binding: ActivityMainBinding? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,37 +31,36 @@ class MainActivity : AppCompatActivity() , BottomNavigationView
             insets
         }
 
-        binding?.bottomNavigation?.setOnItemSelectedListener(this)
-        if (savedInstanceState == null) {
-            binding?.bottomNavigation?.selectedItemId = R.id.item_rose
+        binding?.bottomNavigation?.setOnItemSelectedListener {menu ->
+            when (menu.itemId) {
+                R.id.item_rose -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_container, RoseFragment())
+                        .commit()
+                     true
+                }
+
+                R.id.item_tulip -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_container, TulipFragment())
+                        .commit()
+                     true
+                }
+
+                R.id.item_lilly -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_container, LilyFragment())
+                        .commit()
+                     true
+                }
+
+                else ->  false
+
+            }
         }
-    }
+        binding?.bottomNavigation?.selectedItemId = R.id.item_rose
 
-    override fun onNavigationItemSelected(menu: MenuItem): Boolean {
-        when (menu.itemId) {
-            R.id.item_rose -> {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_container, RoseFragment())
-                    .commit()
-                return true
-            }
-
-            R.id.item_tulip -> {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_container, TulipFragment())
-                    .commit()
-                return true
-            }
-
-            R.id.item_lilly -> {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_container, LilyFragment())
-                    .commit()
-                return true
-            }
-
-            else -> return false
-
-        }
     }
 }
+
+
