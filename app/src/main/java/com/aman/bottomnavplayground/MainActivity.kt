@@ -7,6 +7,7 @@ import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
@@ -44,9 +45,9 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             getBottomNavData().collect { menuDataList ->
                 setupDynamicBottomNavigation(menuDataList)
-
                 //  Assign unique text colors to menu items
-                assignTextColorsToMenu(txtCheckColor = R.color.primaryColor, txtUncheckedColor = R.color.black, binding?.bottomNavigation!!)
+                assignTextColorsToMenu(txtCheckColor = R.color.primaryColor, txtUncheckedColor = R.color.black)
+
             }
         }
     }
@@ -55,26 +56,34 @@ class MainActivity : AppCompatActivity() {
     fun setupDynamicBottomNavigation(menuDataList: List<NavMenuData>) {
         val bottomNavView = binding?.bottomNavigation
 
-        bottomNavView?.itemIconTintList = null
-        bottomNavView?.itemTextColor = null
+//        bottomNavView?.itemIconTintList = null
+//        bottomNavView?.itemTextColor = null
 
         // Clear existing menu
         bottomNavView?.menu?.clear()
 
         // Create and set menu items dynamically
         menuDataList.forEachIndexed { index, navMenuData ->
-            val menuItem = bottomNavView?.menu?.add(0, index, index, navMenuData.title)
+            val menuItem = bottomNavView?.menu?.add(0, index, index, navMenuData.title)  // is this the way to add menu in bottom Nav, define the role of each parameter
 
             // Set custom icon selector
-            menuItem?.icon = createIconSelector(
-                navMenuData.activeIcon,
-                navMenuData.inactiveIcon
-            )
+//            menuItem?.icon = createIconSelector(
+//                navMenuData.activeIcon,
+//                navMenuData.inactiveIcon
+//            )
+
+            menuItem?.icon = DrawableCompat.wrap(ContextCompat.getDrawable(this, navMenuData.activeIcon)!!)      // when u want to set single icon for a drawable ( for which u set the IconTint )
+
 
             // Ensure the item is checkable
             menuItem?.isCheckable = true
         }
 
+        val iconTintList = createIconTintStateList(
+            activeColor = ContextCompat.getColor(this, R.color.primaryColor),
+            inactiveColor = ContextCompat.getColor(this, R.color.black)
+        )
+        bottomNavView?.itemIconTintList = iconTintList
 
 
         // Set default selected item
@@ -106,8 +115,24 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun createIconTintStateList(
+        activeColor: Int,
+        inactiveColor: Int
+    ): ColorStateList {
+        val states = arrayOf(
+            intArrayOf(android.R.attr.state_checked), // Active state
+            intArrayOf()                              // Inactive state
+        )
+        val colors = intArrayOf(
+            activeColor,  // Active icon color
+            inactiveColor // Inactive icon color
+        )
+        return ColorStateList(states, colors)
+    }
 
-    private fun createIconSelector(activeIcon: Int, inactiveIcon: Int): StateListDrawable {    //todo:  StateListDrawable?    ContextCompat??
+
+
+    private fun createIconSelector(activeIcon: Int, inactiveIcon: Int): StateListDrawable {    //todo: why used  StateListDrawable when our menuItem?.icon  requires a Drawable icon
         val drawable = StateListDrawable()
         drawable.addState(intArrayOf(android.R.attr.state_checked), ContextCompat.getDrawable(this, activeIcon))
         drawable.addState(intArrayOf(), ContextCompat.getDrawable(this, inactiveIcon))
@@ -115,7 +140,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Function to assign unique text colors for each menu item
-    private fun assignTextColorsToMenu(txtCheckColor: Int, txtUncheckedColor: Int, bottomNavView: BottomNavigationView) {
+    private fun assignTextColorsToMenu(txtCheckColor: Int, txtUncheckedColor: Int) {
+        val bottomNavView = binding?.bottomNavigation
 
             val states = arrayOf(
                 intArrayOf(android.R.attr.state_checked),  // Active state
@@ -130,7 +156,7 @@ class MainActivity : AppCompatActivity() {
             // Create a ColorStateList for the current menu item
             val colorStateList = ColorStateList(states, colors)
 
-            bottomNavView.setItemTextColor(colorStateList)
+            bottomNavView?.setItemTextColor(colorStateList)
         }
 
 
@@ -143,15 +169,16 @@ class MainActivity : AppCompatActivity() {
                 title = "Rose",
             ),
             NavMenuData(
+                activeIcon = R.drawable.ic_lily_active,
+                inactiveIcon = R.drawable.ic_lilly_inactive,
+                title = "Lily",
+            ),
+            NavMenuData(
                 activeIcon = R.drawable.ic_tulip_active,
                 inactiveIcon = R.drawable.ic_tulip_inactive,
                 title = "Tulip",
             ),
-            NavMenuData(
-                activeIcon = R.drawable.ic_lily_active,
-                inactiveIcon = R.drawable.ic_lilly_inactive,
-                title = "Lily",
-            )
+
         )
         emit(list)
     }
