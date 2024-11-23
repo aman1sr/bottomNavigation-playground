@@ -3,17 +3,17 @@
 
     <item
         android:id="@+id/item_rose"
-        android:icon="@drawable/ic_rose"
+        android:icon="@drawable/ic_rose_inactive"
         android:title="Rose" />
 
     <item
         android:id="@+id/item_lilly"
-        android:icon="@drawable/ic_lilly"
+        android:icon="@drawable/ic_lilly_inactive"
         android:title="Lilly" />
 
     <item
         android:id="@+id/item_tulip"
-        android:icon="@drawable/ic_tulip"
+        android:icon="@drawable/ic_tulip_inactive"
         android:title="Tulip" />
 
 </menu>

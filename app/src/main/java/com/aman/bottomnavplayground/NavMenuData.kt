@@ -1,3 +1,7 @@
 package com.aman.bottomnavplayground
 
-class NavMenuData(val image: Int, val title: String)
+data class NavMenuData(
+    val activeIcon: Int,
+    val inactiveIcon: Int,
+    val title: String,
+)

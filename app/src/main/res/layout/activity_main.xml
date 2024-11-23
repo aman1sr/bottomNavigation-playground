@@ -19,12 +19,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-
-        app:itemIconTint="@drawable/nav_icon_color"
-        app:itemTextAppearanceActive="@style/BottomNavigationTextView.Active"
-        app:itemTextAppearanceInactive="@style/BottomNavigationTextView"
-        app:itemTextColor="@drawable/nav_text_color"
-
         />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,9 +1,12 @@
 package com.aman.bottomnavplayground
 
+import android.content.res.ColorStateList
+import android.graphics.drawable.StateListDrawable
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
@@ -35,66 +38,122 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        val bottomNavView = binding?.bottomNavigation
+
+
 
         lifecycleScope.launch {
             getBottomNavData().collect { menuDataList ->
-                // Clear any existing menu items
-                bottomNavView?.menu?.clear()
+                setupDynamicBottomNavigation(menuDataList)
 
-                // Add menu items dynamically
-                menuDataList.forEachIndexed { index, navMenuData ->
-                    bottomNavView?.menu?.add(0, index, index, navMenuData.title)?.apply {
-                        setIcon(navMenuData.image) // Set the icon
-                        isCheckable = true       // Ensure the item is checkable
-                    }
-                }
+                //  Assign unique text colors to menu items
+                assignTextColorsToMenu(txtCheckColor = R.color.primaryColor, txtUncheckedColor = R.color.black, binding?.bottomNavigation!!)
             }
-
-
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container, RoseFragment())
-                .commit()
-
-            bottomNavView?.selectedItemId = 0
-
-            binding?.bottomNavigation?.setOnItemSelectedListener { menu ->
-                when (menu.itemId) {
-                    0 -> {
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.main_container, RoseFragment())
-                            .commit()
-                        true
-                    }
-
-                    1 -> {
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.main_container, TulipFragment())
-                            .commit()
-                        true
-                    }
-
-                    2 -> {
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.main_container, LilyFragment())
-                            .commit()
-                        true
-                    }
-
-                    else -> false
-
-                }
-            }
-
         }
     }
 
-    fun getBottomNavData() = flow<List<NavMenuData>> {
-        val list = listOf(
-            NavMenuData(R.drawable.ic_rose, "Rose"),
-            NavMenuData(R.drawable.ic_tulip, "Tulip"),
-            NavMenuData(R.drawable.ic_lilly, "Lily"),
-        )
-        return@flow emit(list)
+    // Function to dynamically set BottomNavigationView menu
+    fun setupDynamicBottomNavigation(menuDataList: List<NavMenuData>) {
+        val bottomNavView = binding?.bottomNavigation
+
+        bottomNavView?.itemIconTintList = null
+        bottomNavView?.itemTextColor = null
+
+        // Clear existing menu
+        bottomNavView?.menu?.clear()
+
+        // Create and set menu items dynamically
+        menuDataList.forEachIndexed { index, navMenuData ->
+            val menuItem = bottomNavView?.menu?.add(0, index, index, navMenuData.title)
+
+            // Set custom icon selector
+            menuItem?.icon = createIconSelector(
+                navMenuData.activeIcon,
+                navMenuData.inactiveIcon
+            )
+
+            // Ensure the item is checkable
+            menuItem?.isCheckable = true
+        }
+
+
+
+        // Set default selected item
+        bottomNavView?.selectedItemId = 0
+
+        // Set item selection listener
+        bottomNavView?.setOnItemSelectedListener { menu ->
+            when (menu.itemId) {
+                0 -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_container, RoseFragment())
+                        .commit()
+                    true
+                }
+                1 -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_container, TulipFragment())
+                        .commit()
+                    true
+                }
+                2 -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_container, LilyFragment())
+                        .commit()
+                    true
+                }
+                else -> false
+            }
+        }
     }
+
+
+    private fun createIconSelector(activeIcon: Int, inactiveIcon: Int): StateListDrawable {    //todo:  StateListDrawable?    ContextCompat??
+        val drawable = StateListDrawable()
+        drawable.addState(intArrayOf(android.R.attr.state_checked), ContextCompat.getDrawable(this, activeIcon))
+        drawable.addState(intArrayOf(), ContextCompat.getDrawable(this, inactiveIcon))
+        return drawable
+    }
+
+    // Function to assign unique text colors for each menu item
+    private fun assignTextColorsToMenu(txtCheckColor: Int, txtUncheckedColor: Int, bottomNavView: BottomNavigationView) {
+
+            val states = arrayOf(
+                intArrayOf(android.R.attr.state_checked),  // Active state
+                intArrayOf()                              // Inactive state
+            )
+
+            val colors = intArrayOf(
+                ContextCompat.getColor(this, txtCheckColor),   // Active text color
+                ContextCompat.getColor(this, txtUncheckedColor) // Inactive text color
+            )
+
+            // Create a ColorStateList for the current menu item
+            val colorStateList = ColorStateList(states, colors)
+
+            bottomNavView.setItemTextColor(colorStateList)
+        }
+
+
+
+    fun getBottomNavData() = flow {
+        val list = listOf(
+            NavMenuData(
+                activeIcon = R.drawable.ic_active,
+                inactiveIcon = R.drawable.ic_rose_inactive,
+                title = "Rose",
+            ),
+            NavMenuData(
+                activeIcon = R.drawable.ic_tulip_active,
+                inactiveIcon = R.drawable.ic_tulip_inactive,
+                title = "Tulip",
+            ),
+            NavMenuData(
+                activeIcon = R.drawable.ic_lily_active,
+                inactiveIcon = R.drawable.ic_lilly_inactive,
+                title = "Lily",
+            )
+        )
+        emit(list)
+    }
+
 }
