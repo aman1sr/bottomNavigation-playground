@@ -1,7 +1,7 @@
 # Bottom Navigation PlayGround
 
 ## Overview of current branch
-In this branch we Dynamic inflate our Bottom Navigation menu & labels, setting their tint & label state in xml part
+In this branch, we dynamically inflate the Bottom Navigation menu and labels, and configure their tint and label state through XML attributes.
 
 ![Sample GIF](https://mir-s3-cdn-cf.behance.net/project_modules/disp/479fbd19461997.5f97cd5379eea.gif)
 
