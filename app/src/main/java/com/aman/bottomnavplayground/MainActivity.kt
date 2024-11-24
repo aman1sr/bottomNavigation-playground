@@ -56,8 +56,7 @@ class MainActivity : AppCompatActivity() {
     fun setupDynamicBottomNavigation(menuDataList: List<NavMenuData>) {
         val bottomNavView = binding?.bottomNavigation
 
-//        bottomNavView?.itemIconTintList = null
-//        bottomNavView?.itemTextColor = null
+        bottomNavView?.itemIconTintList = null
 
         // Clear existing menu
         bottomNavView?.menu?.clear()
@@ -67,23 +66,23 @@ class MainActivity : AppCompatActivity() {
             val menuItem = bottomNavView?.menu?.add(0, index, index, navMenuData.title)  // is this the way to add menu in bottom Nav, define the role of each parameter
 
             // Set custom icon selector
-//            menuItem?.icon = createIconSelector(
-//                navMenuData.activeIcon,
-//                navMenuData.inactiveIcon
-//            )
+            menuItem?.icon = createIconSelector(
+                navMenuData.activeIcon,
+                navMenuData.inactiveIcon
+            )
 
-            menuItem?.icon = DrawableCompat.wrap(ContextCompat.getDrawable(this, navMenuData.activeIcon)!!)      // when u want to set single icon for a drawable ( for which u set the IconTint )
+//            menuItem?.icon = DrawableCompat.wrap(ContextCompat.getDrawable(this, navMenuData.activeIcon)!!)      // when u want to set single icon for a drawable ( for which u set the IconTint )
 
 
             // Ensure the item is checkable
             menuItem?.isCheckable = true
         }
 
-        val iconTintList = createIconTintStateList(
-            activeColor = ContextCompat.getColor(this, R.color.primaryColor),
-            inactiveColor = ContextCompat.getColor(this, R.color.black)
-        )
-        bottomNavView?.itemIconTintList = iconTintList
+//        val iconTintList = createIconTintStateList(
+//            activeColor = ContextCompat.getColor(this, R.color.primaryColor),
+//            inactiveColor = ContextCompat.getColor(this, R.color.black)
+//        )
+//        bottomNavView?.itemIconTintList = iconTintList
 
 
         // Set default selected item
