@@ -23,7 +23,7 @@
         app:itemIconTint="@drawable/nav_icon_color"
         app:itemTextAppearanceActive="@style/BottomNavigationTextView.Active"
         app:itemTextAppearanceInactive="@style/BottomNavigationTextView"
-        app:itemTextColor="@drawable/nav_text_color"
+        app:labelVisibilityMode="unlabeled"
 
         />
 
