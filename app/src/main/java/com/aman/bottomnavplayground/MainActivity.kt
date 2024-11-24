@@ -50,42 +50,40 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
 
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.main_container, RoseFragment())
+            .commit()
 
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container, RoseFragment())
-                .commit()
+        bottomNavView?.selectedItemId = 0
 
-            bottomNavView?.selectedItemId = 0
-
-            binding?.bottomNavigation?.setOnItemSelectedListener { menu ->
-                when (menu.itemId) {
-                    0 -> {
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.main_container, RoseFragment())
-                            .commit()
-                        true
-                    }
-
-                    1 -> {
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.main_container, TulipFragment())
-                            .commit()
-                        true
-                    }
-
-                    2 -> {
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.main_container, LilyFragment())
-                            .commit()
-                        true
-                    }
-
-                    else -> false
-
+        binding?.bottomNavigation?.setOnItemSelectedListener { menu ->
+            when (menu.itemId) {
+                0 -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_container, RoseFragment())
+                        .commit()
+                    true
                 }
-            }
 
+                1 -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_container, TulipFragment())
+                        .commit()
+                    true
+                }
+
+                2 -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_container, LilyFragment())
+                        .commit()
+                    true
+                }
+
+                else -> false
+
+            }
         }
     }
 
