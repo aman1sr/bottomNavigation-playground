@@ -6,4 +6,16 @@
     </style>
 
     <style name="Theme.BottomNavPlayground" parent="Base.Theme.BottomNavPlayground" />
+
+    <style name="BottomNavigationTextView.Active" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textColor">@color/primaryColor</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="BottomNavigationTextView" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
 </resources>

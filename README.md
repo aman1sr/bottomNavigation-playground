@@ -1,21 +1,19 @@
 # Bottom Navigation PlayGround
 
-## Overview
-This Android project demonstrates various scenario of implementing Bottom Navigation from static xml -> dynamically handing bottom Navigation menu -> compose 
+## Overview of current branch
+In this branch, we dynamically inflate the Bottom Navigation menu and labels, and configure their tint and label state through XML attributes.
 
-![Sample GIF](https://media.tenor.com/images/5d9e6aafbd9c421caebf9133765f3c81/tenor.gif)
-
-## PlayGround Branches
-- Part1 : master branch -> basic 3 step implementation of BottomNavigation
-- Part2 : coming soon
+![Sample GIF](https://mir-s3-cdn-cf.behance.net/project_modules/disp/479fbd19461997.5f97cd5379eea.gif)
 
 
-## Implementation Details
-
-3 steps involved are:
-1. creating an xml menu resource ( which contain your bottom navigation items)
-2. adding an xml resource of `BottomNavigationView` & setting menu atttibute
-3. inflating botom Navigation view & setting its onMenu click event
+## The implementation involves the following three steps:
+- Setting XML Attributes
+    - Configure the BottomNavigationView by setting the following attributes:
+    - itemIconTint 
+    - itemTextAppearanceActive 
+    - itemTextAppearanceInactive
+- Dynamically add menu items and labels based on data from a dummy API.
+- Handling Menu Click Events for the Bottom Navigation.
 
 ---
 
